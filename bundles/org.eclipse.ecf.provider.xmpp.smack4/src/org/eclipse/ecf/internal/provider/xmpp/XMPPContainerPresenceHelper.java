@@ -786,14 +786,15 @@ public class XMPPContainerPresenceHelper implements ISharedObject {
 			final String from = xmppPresence.getFrom().toString();
 			result = getFromCache(from);
 			if (result == null && from != null) {
-				result = new VCard();
 				try {
 					VCardManager manager = VCardManager.getInstanceFor(container.getXMPPConnection());
-					manager.loadVCard(from);
-					// result.load(container.getXMPPConnection(), from);
-					addToCache(from, result);
+					if (manager != null) {
+						result = manager.loadVCard(from);
+						if (result != null)
+							addToCache(from, result);
+					}
 				} catch (final XMPPException | NoResponseException | NotConnectedException e) {
-					traceStack("vcard loading exception", e);
+					traceStack("exception reading vcard from="+from, e);
 				}
 			}
 		}
