@@ -258,7 +258,10 @@ public class ECFConnection implements ISynchAsynchConnection {
 					return true;
 				}
 			});
+			
+			//builder.set
 			config = builder.build();
+	
 
 			connection = new XMPPTCPConnection(config);
 			connection.connect();
